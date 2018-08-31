@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{sub_category.sub_name}}</title>
+
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+    a.actions{
+
+      padding: 10px;
+      background-color: #4ED488;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 15px;
+      font-family: 'Ubuntu', sans-serif;
+      float: right;
+      margin-right: 10px;
+      transition: color 0.5s linear;
+    }
+
+    .actions:hover{color: green;}
+
+    input.searchbar{
+      position: relative;
+      height: 50px;
+      width: 1000px;
+      float: right;
+      margin-right: 20%;
+      font-size: 20px;
+      color: grey;
+    }
+
+    .featuredtitle{
+
+      float:left;
+      margin-top:10%;
+      font-family: 'Ubuntu', sans-serif;
+      color: #5F5F5F;
+      margin-left: 5%;
+    }
+
+    div.content
+{
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+    div.product{
+	position:relative;
+	float:left;
+	width: 90%;
+	height:15%;
+  transition: color 0.5s linear;
+  text-align: left;
+  margin-left: 30px;
+  margin-top: 70px;
+}
+
+    .category:hover{cursor: pointer;}
+
+
+    img{
+      float: left;
+      margin-top: 20px;
+    }
+
+    img:hover{cursor: pointer}
+
+    p.title{
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 25px;
+}
+
+    p.desc{
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 15px;
+
+    }
+
+    p.price{
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 15px;
+      float: right;
+    }
+
+    a.home{
+
+      padding: 10px;
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 15px;
+      font-family: 'Ubuntu', sans-serif;
+      float: right;
+      margin-right: 10px;
+      transition: color 0.5s linear;
+    }
+
+    .home:hover{color: #FF6666;}
+
+    </style>
+
+  </head>
+  <body>
+
+    <div class="content">
+
+    <a class="home" href="/items/">Homepage</a>
+    <a class="actions" href="/items/add_a_product/">Add a product</a>
+    {% if user.is_authenticated %}
+    <a class="actions" href="/items/logout/">Logout</a>
+    <a class="actions" href="/items/my_profile/">My Profile</a>
+    {% else %}
+    <a class="actions" href="/items/login_signup/">Login/Sign Up</a>
+    {% endif %}
+
+    <form action="#" method="post" style="position: relative;">
+      <input type="text" name="search" placeholder="Search" class="searchbar">
+    </form>
+
+    {% for product in sub_category.product_set.all %}
+    <div class="product">
+    <a href="/items/{{category.category_name}}/{{ sub_category.sub_name }}/{{ product.product_name }}">
+    <img src="{{ product.product_img.url }}" style="width: 150px; height: 150px;">
+    </a>
+    <p class="title">{{product.product_name}}</p><br>
+    <p class="desc" style="font-size: 15px;">{{ product.product_desc }}</p>
+    <p class="price">Price: {{ product.product_price }}</p>
+    </div>
+    {% endfor %}
+
+    <form action="/items/filtered/" method="post">
+      {{ prangeform.as_p }}
+    </form>
+  </div>
+
+  </body>
+</html>

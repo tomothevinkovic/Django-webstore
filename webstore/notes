@@ -1,0 +1,81 @@
+LOGIN
+def login(request):
+    global logged_in
+    all_categories = Category.objects.all()
+    registration_form = RegistrationForm(request.POST)
+    login_form = LoginForm(request.POST)
+
+    if logged_in == False:
+        if request.method == 'POST' and 'loginbtn' in request.POST:
+            if login_form.is_valid():
+                try:
+                    user = User.objects.get(username = login_form.cleaned_data['username'])
+                    if user.password == login_form.cleaned_data['password'] and user.email == login_form.cleaned_data['email']:
+                        user.logged_in = True
+                        logged_in = True
+                        user.save()
+                        return render(request, 'index.html', {'logged_in': logged_in, 'all_categories': all_categories})
+                    else:
+                        return HttpResponse('Invalid credidentials, please, try again!')
+                except(KeyError, User.DoesNotExist):
+                    return HttpResponse('You cannot login since you are not registered!')
+
+        if request.method == 'POST' and 'regbtn' in request.POST:
+            if registration_form.is_valid():
+                username = registration_form.cleaned_data['username']
+                email = registration_form.cleaned_data['email']
+                password = registration_form.cleaned_data['password']
+                city = registration_form.cleaned_data['city']
+                adress = registration_form.cleaned_data['adress']
+                postalcode = registration_form.cleaned_data['postalcode']
+                first_name = registration_form.cleaned_data['first_name']
+                last_name = registration_form.cleaned_data['last_name']
+                user = User()
+
+#USER U MODELS
+class User(models.Model):
+    email = models.CharField(max_length = 75)
+    username = models.CharField(max_length = 25)
+    password = models.CharField(max_length = 100)
+    city = models.CharField(max_length = 100, default = '')
+    adress = models.CharField(max_length = 100, default = '')
+    postalcode = models.CharField(max_length = 20, default = '')
+    first_name = models.CharField(max_length = 100, default = '')
+    last_name = models.CharField(max_length = 100, default = '')
+    logged_in = models.BooleanField(default = False)
+
+    def __str__(self):
+        return f"{self.username}"
+                user.username = username
+                user.email = email
+                user.city = city
+                user.adress = adress
+                user.postalcode = postalcode
+                user.password = password
+                user.first_name = first_name
+                user.last_name = last_name
+                user.save()
+                return HttpResponse('You have succesfully registered')
+
+    passes = {
+
+        'logged_in': logged_in,
+        'registration_form': registration_form,
+        'login_form': login_form
+
+    }
+
+    return render(request, 'login.html', passes)
+
+
+LOGOUT
+    user = User.objects.get(username = ser.username)
+    global logged_in
+    all_categories = Category.objects.all()
+    logged_in = False
+    user.logged_in = False
+    return render(request, 'index.html', {'logged_in': logged_in, 'all_categories': all_categories})
+
+
+<p>*all other information, including your adress, city, phone number etc., will be ready for entry after the initial registraion under <i> My Profile</i> section!</p>
+

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ category.category_name }}</title>
+
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+    a.actions{
+
+      padding: 10px;
+      background-color: #4ED488;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 15px;
+      font-family: 'Ubuntu', sans-serif;
+      float: right;
+      margin-right: 10px;
+      transition: color 0.5s linear;
+    }
+
+    .actions:hover{color: green;}
+
+    input.searchbar{
+      height: 50px;
+      width: 1000px;
+      float: right;
+      margin-right: 20%;
+      font-size: 20px;
+      color: grey;
+    }
+
+    .featuredtitle{
+
+      float:left;
+      margin-top:10%;
+      font-family: 'Ubuntu', sans-serif;
+      color: #5F5F5F;
+      margin-left: 5%;
+    }
+
+    .category{
+      position: relative;
+      float: left;
+      width: 300px;
+      height: 300px;
+      margin-top: 10%;
+      margin-left: 60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align: bottom;
+
+    }
+
+    .category:hover{cursor: pointer;}
+
+
+    img{
+      margin-left: 18%;
+    }
+
+    img:hover{cursor: pointer}
+
+    p.cats{
+
+      position: relative;
+      left: -40%;
+      top:48%;
+      color: grey;
+      font-size: 25px;
+      display: block;
+      font-family: 'Ubuntu', sans-serif;
+    }
+
+    a.home{
+
+      padding: 10px;
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 15px;
+      font-family: 'Ubuntu', sans-serif;
+      float: right;
+      margin-right: 10px;
+      transition: color 0.5s linear;
+    }
+
+    .home:hover{color: #FF6666;}
+
+    </style>
+
+  </head>
+  <body>
+
+    <a class="home" href="/items/">Homepage</a>
+    <a class="actions" href="/items/add_a_product/">Add a product</a>
+    {% if user.is_authenticated %}
+    <a class="actions" href="/items/logout/">Logout</a>
+    <a class="actions" href="/items/my_profile/">My Profile</a>
+    {% else %}
+    <a class="actions" href="/items/login_signup/">Login/Sign Up</a>
+    {% endif %}
+
+    <form action="#" method="post">
+      <input type="text" name="search" placeholder="Search" class="searchbar">
+    </form>
+
+    {% for sub in category.sub_category_set.all %}
+    <div class="category">
+    <a href="/items/{{category.category_name}}/{{ sub.sub_name }}">
+    <img src="{{ sub.sub_pic }}">
+    </a>
+    <p class="cats">{{sub.sub_name}}</p>
+
+    </div>
+    {% endfor %}
+
+  </body>
+</html>

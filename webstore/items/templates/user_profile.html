@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My Profile</title>
+
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+      div.content{
+
+      position: absolute;
+      margin: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 90%;
+    }
+
+    a.actions{
+
+      padding: 10px;
+      background-color: #4ED488;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 15px;
+      font-family: 'Ubuntu', sans-serif;
+      float: right;
+      margin-right: 10px;
+      transition: color 0.5s linear;
+    }
+
+    .actions:hover{color: green;}
+
+    input.searchbar{
+      height: 50px;
+      width: 1000px;
+      float: right;
+      margin-right: 20%;
+      font-size: 20px;
+      color: grey;
+    }
+
+    .featuredtitle{
+
+      float:left;
+      margin-top:10%;
+      font-family: 'Ubuntu', sans-serif;
+      color: #5F5F5F;
+      margin-left: 5%;
+    }
+
+    .category{
+      position: relative;
+      float: left;
+      width: 400px;
+      height: 350px;
+      margin-top: 10%;
+      margin-left: 60px;
+      text-align: bottom;
+
+    }
+
+    .category:hover{cursor: pointer;}
+
+
+    img{
+      margin-left: 18%;
+    }
+
+    img:hover{cursor: pointer}
+
+    p.cats{
+
+      position: relative;
+      left: -40%;
+      top:48%;
+      color: grey;
+      font-size: 25px;
+      display: block;
+      font-family: 'Ubuntu', sans-serif;
+    }
+
+    div.right{
+
+
+      float: left;
+      margin-left: 70%;
+      margin-top: -20%;
+
+    }
+
+    a.home{
+
+      padding: 10px;
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 15px;
+      font-family: 'Ubuntu', sans-serif;
+      float: right;
+      margin-right: 10px;
+      transition: color 0.5s linear;
+    }
+
+    .home:hover{color: #FF6666;}
+
+    </style>
+
+  </head>
+  <body>
+
+<div class="content">
+
+	<a class="home" href="/items/">Homepage</a>
+    <a class="actions" href="/items/add_a_product/">Add a product</a>
+    {% if user.is_authenticated %}
+    <a class="actions" href="/items/logout/">Logout</a>
+    <a class="actions" href="/items/my_profile/">My Profile</a>
+    {% else %}
+    <a class="actions" href="/items/login_signup/">Login/Sign Up</a>
+    {% endif %}
+    <form action="#" method="post">
+      <input type="text" name="search" placeholder="Search" class="searchbar">
+    </form>
+
+    <div class="category">
+      <p> <h2><strong>Account information:</strong></h2> </p>
+    <p>Name and last name: {{ requested_user.last_name }} {{ requested_user.first_name }}</p><br>
+    <p>Username: {{ requested_user.username }}</p><br>
+    <p>E-mail: {{ requested_user.email }}</p><br>
+    <p>Zip Code and city: {{ requested_user.profile.postalcode }}, {{ requested_user.profile.city }}</p><br>
+    <p>Adress: {{ requested_user.profile.adress }}</p> <br>
+    <p>Products: {% if not products_list %}
+    	<i>The user currently has no products</i>
+    	{% else %}
+      {% for product in products_list %}
+      <br><a href="/items/{{ product.sub.category }}/{{ product.sub }}/{{ product }}/">{{ product }}</a> <br>
+      {% endfor %}
+    {% endif %}
+    </p> <br> <br>
+    </div>
+
+    </div>
+</div>
+  </body>
+</html>
