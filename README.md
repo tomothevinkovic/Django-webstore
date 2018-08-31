@@ -1,6 +1,6 @@
 CHANELLOG
 
-Version 0.1., Release Date: 24th August 2018, initial version, scraped
+Version 0.1., Release Date: 24th August 2018, initial version
 
 Version 0.2. Release Date: 29th August 2018.
 CHANGES in version 0.2:
