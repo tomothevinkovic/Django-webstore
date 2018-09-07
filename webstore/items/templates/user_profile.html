@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>My Profile</title>
+    <title>{{ requested_user.username }}</title>
 
     <style>
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
@@ -15,7 +15,7 @@
       right: 0;
       bottom: 0;
       left: 0;
-      width: 90%;
+      width: 100%;
     }
 
     a.actions{
@@ -108,6 +108,8 @@
 
     .home:hover{color: #FF6666;}
 
+    p{font-family: 'Ubuntu', sans-serif;}
+
     </style>
 
   </head>
@@ -128,13 +130,13 @@
     </form>
 
     <div class="category">
-      <p> <h2><strong>Account information:</strong></h2> </p>
-    <p>Name and last name: {{ requested_user.last_name }} {{ requested_user.first_name }}</p><br>
-    <p>Username: {{ requested_user.username }}</p><br>
-    <p>E-mail: {{ requested_user.email }}</p><br>
-    <p>Zip Code and city: {{ requested_user.profile.postalcode }}, {{ requested_user.profile.city }}</p><br>
-    <p>Adress: {{ requested_user.profile.adress }}</p> <br>
-    <p>Products: {% if not products_list %}
+      <p> <h2 style="font-family:'Ubuntu', sans-serif;"><strong>Account information:</strong></h2> </p>
+    <p><strong>Name and last name: </strong>{{ requested_user.last_name }} {{ requested_user.first_name }}</p><br>
+    <p><strong>Username:</strong> {{ requested_user.username }}</p><br>
+    <p><strong>E-mail:</strong> {{ requested_user.email }}</p><br>
+    <p><strong> Zip Code and city:</strong> {{ requested_user.profile.postalcode }}, {{ requested_user.profile.city }}</p><br>
+    <p><strong>Adress:</strong>  {{ requested_user.profile.adress }}</p> <br>
+    <p><strong>Products:</strong> {% if not products_list %}
     	<i>The user currently has no products</i>
     	{% else %}
       {% for product in products_list %}
