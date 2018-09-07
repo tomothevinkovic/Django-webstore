@@ -29,7 +29,7 @@ class ProductForm(forms.Form):
     subc = forms.ChoiceField(label='Sub Category', choices = SUBS, widget = forms.Select(attrs = {'class': 'choiceclass'}))
     Product_name = forms.CharField(label='Product Name', max_length = 100, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))
     Product_Desc = forms.CharField(label='Description', max_length = 10000, widget = forms.Textarea(attrs = {'class': 'textareainputstyle'}))
-    Price = forms.CharField(label = 'Price', max_length = 10, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))
+    Price = forms.CharField(label = 'Price', max_length = 10, widget = forms.TextInput(attrs = {'class': 'pricestyle'}))
     Currency = forms.ChoiceField(label='Currency', choices = CURRENCIES, widget = forms.Select(attrs = {'class': 'choiceclass'}))
     Image = forms.FileField()
 
@@ -41,7 +41,7 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['email', 'username', 'password']
-    email = forms.CharField(label = 'Email', max_length = 75, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))
+    email = forms.CharField(label = 'E-mail adress', max_length = 75, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))
     username = forms.CharField(label = 'Username', max_length = 25, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))
     password = forms.CharField(label = 'Password', max_length = 100, widget = forms.PasswordInput(attrs = {'class': 'inputstyle'}))
 

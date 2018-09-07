@@ -7,6 +7,8 @@ app_name = 'items'
 urlpatterns = [
     path('', views.index, name = 'index'),
 
+    path('about/', views.about, name = 'about'),
+
     path('login_signup/', views.login, name = 'login'),
 
     path('users/<str:username>/', views.userprofile, name = 'userprofile'),

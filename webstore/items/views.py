@@ -174,6 +174,8 @@ def add_a_product(request):
                     product.sub = selected_sub
                     product.user =  seller
                     product.product_name = form.cleaned_data['Product_name']
+                    if Product.objects.filter(product_name = product.product_name):
+                        return HttpResponse("There is a product with the exact same name, please name your product diffrently!")
                     product.product_desc = form.cleaned_data['Product_Desc']
                     price_value = form.cleaned_data['Price']
                     price_currency = form.cleaned_data['Currency']
@@ -197,3 +199,7 @@ def add_a_product(request):
 
     }
     return render(request, 'add_a_product.html',  passes)
+
+def about(request):
+    user = request.user
+    return render(request, 'about.html', {'user': user})
