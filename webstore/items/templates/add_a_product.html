@@ -2,7 +2,7 @@
 <html>
 {% load static %}
   <head>
-    <title>Home</title>
+    <title>Add a product</title>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,19 +52,8 @@
 h1{font-family: 'Ubuntu', sans-serif;}
 
 body {
-   background-color: #000;
+   background-color: #fff;
 }
-
-.footer {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #000;
-    color: white;
-    text-align: center;
-}
-
-
 
 @media (min-width: 1px){
 
@@ -206,9 +195,9 @@ background-color: #fff;
     <div class="collapse navbar-collapse" id="mainNavBar">
       <ul class="nav navbar-nav">
 
-        <li class="active"><a href="/items/">Home</a></li>
+        <li><a href="/items/">Home</a></li>
         <li><a href="/items/about/">About</a></li>
-        <li><a href="/items/add_a_product/">Add a product</a></li>
+        <li class="active"><a href="/items/add_a_product/">Add a product</a></li>
 
       </ul>
 
@@ -239,7 +228,7 @@ background-color: #fff;
                 </li>
 
                 <li>
-                    <a href="/items/my_profile/">Settings</a>   
+                    <a href="/items/my_profile/">My profile</a>   
                 </li>
 
                 <li>
@@ -264,8 +253,8 @@ $("#menu-toggle").click( function (e){
 
     </nav>
 
-    <div class="right">
-      <h1 style="font-family: 'Ubuntu', sans-serif;">Add a product</h1>
+    <div class="container-fluid custom">
+      <h1 style="font-family: 'Ubuntu', sans-serif;">Add a product</h1><br>
     <form action="/items/add_a_product/" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
@@ -273,6 +262,5 @@ $("#menu-toggle").click( function (e){
     </form>
     </div>
 </div>
-<div class="footer"><p>&copyTomislav Vinkovic, open for distribution and development under GPL v3</p></div>
   </body>
 </html>

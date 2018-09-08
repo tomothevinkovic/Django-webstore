@@ -2,7 +2,7 @@
 <html>
 {% load static %}
   <head>
-    <title>Home</title>
+    <title>{{sub.sub_name}}</title>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,16 +14,14 @@
 
     li a{font-weight: bold;}
 
+
     @media (min-width: 1000px) {
     .container{
-        max-width: 180px;
-        border: 2px groove #E0E0E0; 
+        max-width: 100%;
+        border: 1px solid black; 
         border-radius: 5px;
         float: left;
-        margin-top: 50px;
-        margin-left: 50px;
-        text-align: center;
-        padding: 2px;
+        text-align: left;
         transition: border-color 0.5s linear
     }
 
@@ -33,7 +31,7 @@
 
 .container p{font-family: 'Ubuntu', sans-serif; font-size: 18px;}
 
-.custom{margin-top: 10%; width: 90%; background-color: white; border: 2px groove #E0E0E0; border-radius: 5px;}
+.custom{margin-top: 10%; width: 100%; background-color: white;}
 
 .customfull{border: hidden; width: 90%; padding-bottom: 50px; background-color: white;}
 
@@ -42,7 +40,7 @@
         width: 100%;
         float: left;
         margin-top: 100px;
-        border: 2px groove #E0E0E0; 
+        border: 1px solid black; 
         border-radius: 5px;
     }
 
@@ -52,19 +50,8 @@
 h1{font-family: 'Ubuntu', sans-serif;}
 
 body {
-   background-color: #000;
+   background-color: #fff;
 }
-
-.footer {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #000;
-    color: white;
-    text-align: center;
-}
-
-
 
 @media (min-width: 1px){
 
@@ -190,7 +177,7 @@ body {
                 </li>
 
                 <li>
-                    <a href="/items/my_profile/">Settings</a>   
+                    <a href="/items/my_profile/">My profile</a>   
                 </li>
 
                 <li>
@@ -215,8 +202,9 @@ $("#menu-toggle").click( function (e){
 
 </nav>
   <div class="container-fluid custom">
+    <h1>Products:</h1>
     {% for product in sub_category.product_set.all %}
-    <div class="product">
+    <div class="container">
     <a href="/items/{{category.category_name}}/{{ sub_category.sub_name }}/{{ product.product_name }}">
     <h1>{{product.product_name}}</h1><br></a>
     <p class="desc" style="font-size: 15px;">{{ product.product_desc }}</p>

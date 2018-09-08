@@ -2,7 +2,7 @@
 <html>
 {% load static %}
   <head>
-    <title>Home</title>
+    <title>Login/Sign Up</title>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,16 +52,6 @@ h1{font-family: 'Ubuntu', sans-serif;}
 body {
    background-color: #000;
 }
-
-.footer {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #000;
-    color: white;
-    text-align: center;
-}
-
 
 
 @media (min-width: 1px){
@@ -193,7 +183,7 @@ input[type = submit]:hover{color: #fff;}
     <div class="collapse navbar-collapse" id="mainNavBar">
       <ul class="nav navbar-nav">
 
-        <li class="active"><a href="/items/">Home</a></li>
+        <li><a href="/items/">Home</a></li>
         <li><a href="/items/about/">About</a></li>
         <li><a href="/items/add_a_product/">Add a product</a></li>
 
@@ -205,7 +195,7 @@ input[type = submit]:hover{color: #fff;}
         {% if user.is_authenticated %}
         <li><a href="#"><button class="btn" id="menu-toggle"><span class="glyphicon glyphicon-user"></button></span></a></li>
         {% else %}
-        <li><a class="actions" href="/items/login_signup/">Login/Sign Up</a></li>
+        <li class="active"><a class="actions" href="/items/login_signup/">Login/Sign Up</a></li>
         {% endif %}
 
       </ul>
@@ -225,7 +215,7 @@ input[type = submit]:hover{color: #fff;}
                 </li>
 
                 <li>
-                    <a href="/items/my_profile/">Settings</a>   
+                    <a href="/items/my_profile/">My profile</a>   
                 </li>
 
                 <li>
@@ -267,6 +257,5 @@ $("#menu-toggle").click( function (e){
     </form>
   </div>
 </div>
-<div class="footer"><p>&copyTomislav Vinkovic, open for distribution and development under GPL v3</p></div>
   </body>
 </html>
