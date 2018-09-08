@@ -153,7 +153,7 @@ def products(request, category_name, sub_name):
 
 def product_detail(request, category_name, sub_name, product_name):
     product = get_object_or_404(Product, product_name = product_name)
-    return render(request, 'product_detail.html', {'product': product, 'category_name': category_name})
+    return render(request, 'product_detail.html', {'product': product, 'category_name': category_name,})
 
 
 
@@ -174,11 +174,23 @@ def add_a_product(request):
                     product.sub = selected_sub
                     product.user =  seller
                     product.product_name = form.cleaned_data['Product_name']
+                    if Product.objects.filter(product_name = product.product_name):
+                        return HttpResponse("There is a product with the exact same name, please name your product diffrently!")
                     product.product_desc = form.cleaned_data['Product_Desc']
                     price_value = form.cleaned_data['Price']
                     price_currency = form.cleaned_data['Currency']
                     product.product_price = f"{price_value} {price_currency}"
-                    product.product_img = form.cleaned_data['Image']
+
+                    product.image1 = form.cleaned_data['Image1']
+
+                    if form.cleaned_data['Image2'] is not None:
+                        product.image2 = form.cleaned_data['Image2']
+                    if form.cleaned_data['Image3'] is not None:
+                        product.image3 = form.cleaned_data['Image3']
+                    if form.cleaned_data['Image4'] is not None:
+                        product.image4 = form.cleaned_data['Image4']
+                    if form.cleaned_data['Image5'] is not None:
+                        product.image5 = form.cleaned_data['Image']
                     product.save()
                     return redirect('/items/')
             else:
@@ -197,3 +209,7 @@ def add_a_product(request):
 
     }
     return render(request, 'add_a_product.html',  passes)
+
+def about(request):
+    user = request.user
+    return render(request, 'about.html', {'user': user})
