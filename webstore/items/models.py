@@ -48,7 +48,11 @@ class Product(models.Model):
     product_name = models.CharField(max_length = 150)
     product_desc = models.CharField(max_length = 1000)
     product_price = models.CharField(max_length = 20)
-    product_img = models.FileField(upload_to='media/images/')
+    image1 = models.FileField(upload_to=f'media/products/images/', default = None)
+    image2 = models.FileField(upload_to=f'media/products/images/', blank=True, null=True, default = None)
+    image3 = models.FileField(upload_to=f'media/products/images/', blank=True, null=True, default = None)
+    image4 = models.FileField(upload_to=f'media/products/images//', blank=True, null=True, default = None)
+    image5 = models.FileField(upload_to=f'media/products/images/', blank=True, null=True, default = None)
 
     def __str__(self):
         return f"{self.product_name}"
