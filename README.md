@@ -27,3 +27,20 @@ MAJOR ANNOUNCEMENT:
 -Besides the next smaller update, version 0.2.2., version 0.3 is in development
 -There are new features coming to that version, including the user rating system(Its pieces of code can already be seen in version 0.2.1., although they are commented out)
 -Excpect more information soon!
+
+Version 0.2.2., finished but unreleased, will be mered into version 0.2.3.
+
+Version 0.2.3., release date: 8th September 2018.
+
+Changes in Version 0.2.3.(Definitive Edition):
+-All new and improved, responsive design, designed with the help of bootstrap(NOTE: not the final design)
+-Visual changes on all templates, especially the my profile and product detail pages
+-The my profile and logout buttons are now under the new dropdown menu when the user click the user icon
+-All forms got the slight visual overhaul
+-The bootstrap responsive navigation bar
+-The About page has been added
+-The product can now have up to 5 images, which are all responsive(although there is some work to be done there)
+KNOWN BUGS:
+-Images are not deleted when the product is deleted(to be fixed in the next update)
+NEWS:
+Versions from 0.2.4. and onwards will focus only on the backend changes, front end will be improved at some point but is currently not the focus
