@@ -5,6 +5,9 @@ from . import views, models
 app_name = 'items'
 
 urlpatterns = [
+    
+    path('edit_a_product/<str:product_name>', views.edit_a_product, name = 'edit_a_product'),
+
     path('', views.index, name = 'index'),
 
     path('about/', views.about, name = 'about'),
@@ -26,6 +29,7 @@ urlpatterns = [
     path('<str:category_name>/<str:sub_name>/', views.products, name = 'products'),
 
     path('<str:category_name>/<str:sub_name>/<str:product_name>/', views.product_detail, name = 'product_detail'), 
+
 
 
 ]

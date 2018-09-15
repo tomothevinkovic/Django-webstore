@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+  <head>
+    <title>Edit a product</title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <style>
+
+    li a{font-weight: bold;}
+
+    @media (min-width: 1000px) {
+    .container{
+        max-width: 180px;
+        border: 2px groove #E0E0E0; 
+        border-radius: 5px;
+        float: left;
+        margin-top: 50px;
+        margin-left: 50px;
+        text-align: center;
+        padding: 2px;
+        transition: border-color 0.5s linear
+    }
+
+    .container: hover{border: 2px groove #fff;}
+}
+
+
+.container p{font-family: 'Ubuntu', sans-serif; font-size: 18px;}
+
+.custom{margin-top: 10%; width: 90%; padding-bottom: 11%; background-color: white;}
+
+.customfull{border: hidden; width: 90%; padding-bottom: 10%; background-color: white;}
+
+    @media (min-width: 1px) {
+    .container{
+        width: 100%;
+        float: left;
+        margin-top: 100px;
+        border: 2px groove #E0E0E0; 
+        border-radius: 5px;
+    }
+
+
+}
+
+h1{font-family: 'Ubuntu', sans-serif;}
+
+body {
+   background-color: #fff;
+}
+
+@media (min-width: 1px){
+
+  #sidebar-wrapper {
+    z-index: 1;
+    position: absolute;
+    margin-left: 0%;
+    width: 0;
+    height: 100%;
+    overflow-y: hidden;
+    background: #000;
+}
+
+  #wrapper.menuDisplayed #sidebar-wrapper {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+}
+
+@media(min-width: 1500px){
+#sidebar-wrapper {
+    z-index: 1;
+    position: absolute;
+    margin-left: 85%;
+    width: 0;
+    height: 100%;
+    overflow-y: hidden;
+    background: #000;
+}
+
+#wrapper.menuDisplayed #sidebar-wrapper {
+    width: 250px;
+    height: 500%;
+    text-align: center;
+}
+
+}
+
+
+.sidebar-nav {
+    padding: 0;
+    list-style: none;
+}
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+    text-align: center;
+}
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #ddd;
+}
+.sidebar-nav li a:hover {
+    background: #16A085;
+}
+
+.sidebar-nav li p {
+    display: block;
+    text-decoration: none;
+    color: #ddd;
+}
+
+
+.btn {
+    background-color: #000;
+    border: none;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.inputstyle{
+
+  width: 85%;
+  border: 1px groove #C0C0C0;
+  font-family: 'Roboto Mono', monospace; 
+  font-size: 20px;
+}
+
+input[type = submit]{
+
+  width: 200px;
+  border: 1px groove #000;
+  background-color: #000;
+  color: grey;
+  font-family: 'Roboto Mono', monospace; 
+  font-size: 30px;
+  transition: color 0.5s linear;
+}
+
+input[type = submit]:hover{color: #fff;}
+
+.pricestyle{
+
+  width: 100px;
+  border: 1px groove #E0E0E0;
+  background-color: #fff;
+  font-family: 'Roboto Mono', monospace; 
+  font-size: 15px;
+}
+
+.textareainputstyle{
+
+  width: 100%;
+  border: 1px groove #E0E0E0;
+  background-color: #fff;
+  font-family: 'Roboto Mono', monospace; 
+  resize: none;
+  font-size: 20px;
+}
+
+.choiceclass{
+
+width: 150px;
+font-family: 'Ubuntu', sans-serif;
+font-size: 20px;
+background-color: #fff;
+}
+
+    </style>
+
+  </head>
+  <body>
+    <div class="container-fluid customfull">
+    <nav class="navbar navbar-inverse">
+  <div class="container-fluid" style="width: 100%;">
+
+    <!-- logo-->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavBar">
+          <span class="glyphicon glyphicon-menu-hamburger" style="border: none; color: #fff;"></span>
+      </button>
+      <a href="/items/" class="navbar-brand">Webstore</a>
+    </div>
+    <!-- menu items-->
+    <div class="collapse navbar-collapse" id="mainNavBar">
+      <ul class="nav navbar-nav">
+
+        <li><a href="/items/">Home</a></li>
+        <li><a href="/items/about/">About</a></li>
+        <li class="active"><a href="/items/add_a_product/">Add a product</a></li>
+
+      </ul>
+
+      <!-- right align -->
+      <ul class="nav navbar-nav navbar-right">
+
+        {% if user.is_authenticated %}
+        <li><a href="/items/logout/">Logout</a></li>
+        <li><a href="#"><button class="btn" id="menu-toggle"><span class="glyphicon glyphicon-user"></button></span></a></li>
+        {% else %}
+        <li><a class="actions" href="/items/login_signup/">Login/Sign Up</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+
+    <div id="wrapper">
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li>
+                    <span class="glyphicon glyphicon-user" style="color: white; font-size: 100px;" ></span>
+                </li>
+
+                <li>
+                    <p>{{ user.username }}</p>
+                </li>
+
+                <li>
+                    <a href="/items/my_profile/">My profile</a>   
+                </li>
+
+                <li>
+                    <a href="/items/logout/">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+
+<!-- js script -->
+<script>
+
+$("#menu-toggle").click( function (e){
+    e.preventDefault();
+    $("#wrapper").toggleClass("menuDisplayed");
+
+    });
+
+</script>  
+
+    </nav>
+
+    <div class="container-fluid custom">
+      <h1 style="font-family: 'Ubuntu', sans-serif;">Edit the selected product</h1><br>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit">
+    </form>
+    <br>
+    <p>*Note! All the fields you leave blank will have their most recent values!</p>
+    </div>
+</div>
+  </body>
+</html>

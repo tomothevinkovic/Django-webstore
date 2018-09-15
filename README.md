@@ -43,4 +43,11 @@ Changes in Version 0.2.3.(Definitive Edition):
 KNOWN BUGS:
 -Images are not deleted when the product is deleted(to be fixed in the next update)
 NEWS:
-Versions from 0.2.4. and onwards will focus only on the backend changes, front end will be improved at some point but is currently not the focus
+Versions from 0.2.4. onwards will focus only on the backend changes, front end will be improved at some point but is currently not the focus
+
+Version 0.2.4., release date: 15th september 2018.
+
+Changes in Version 0.2.4.
+-KEY FEATURE: The ability to edit or delete the already posted product(The user can edit anything except the sub category)
+-BUGFIXES:
+ -Images are now deleted when the product is deleted
