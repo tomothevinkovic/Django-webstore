@@ -208,7 +208,7 @@ $("#menu-toggle").click( function (e){
     <a href="/items/{{category.category_name}}/{{ sub_category.sub_name }}/{{ product.product_name }}">
     <h1>{{product.product_name}}</h1><br></a>
     <p class="desc" style="font-size: 15px;">{{ product.product_desc }}</p>
-    <p class="price"><strong>Price:</strong> {{ product.product_price }}</p>
+    <p class="price"><strong>Price:</strong> {{ product.product_price_value }} {{ product.product_price_currency }}</p>
     </div>
     {% endfor %}
   </div>

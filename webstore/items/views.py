@@ -1,13 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from.models import Category, Sub_Category, Product, Profile
-from.forms import ProductForm, LoginForm, RegistrationForm, PriceRangeForm, ProfileForm
+from.forms import ProductForm, LoginForm, RegistrationForm, PriceRangeForm, ProfileForm, ProductEditForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import User
 from webstore.settings import *
 from django import forms
+import os
 
 
 def login(request):
@@ -55,7 +56,7 @@ def login(request):
                     auth_login(request, user)
                     return redirect('/items/')
             else:
-                raise forms.ValidationError(_("Invalid credintials! Please, try again!"))
+                raise forms.ValidationError(("Invalid credintials! Please, try again!"))
     else:
         reg_form = RegistrationForm()
         login_form = LoginForm()
@@ -153,7 +154,42 @@ def products(request, category_name, sub_name):
 
 def product_detail(request, category_name, sub_name, product_name):
     product = get_object_or_404(Product, product_name = product_name)
-    return render(request, 'product_detail.html', {'product': product, 'category_name': category_name,})
+    user = request.user
+    if request.method == 'POST' and 'delete' in request.POST:
+        if user == product.user:
+            os.chdir("..")
+            os.remove(f'webstoremedia/{product.image1}')
+            try:
+                os.remove(f'webstoremedia/{product.image2}')
+            except:
+                pass
+
+            try:
+                os.remove(f'webstoremedia/{product.image3}')
+            except:
+                pass
+
+            try:
+                os.remove(f'webstoremedia/{product.image4}')
+            except:
+                pass
+
+            try:
+                os.remove(f'webstoremedia/{product.image5}')
+            except:
+                pass
+
+            product.delete()
+            return redirect('/items/my_profile/')
+        else:
+            return HttpResponse("You cannot delete a product because you are not the user who created the product!")
+    elif request.method == 'POST' and 'edit' in request.POST:
+        if user == product.user:
+            return redirect(f'/items/edit_a_product/{product.product_name}')
+        else:
+            return HttpResponse("You cannot edit product information because you are not the user who created the product!")
+
+    return render(request, 'product_detail.html', {'product': product, 'category_name': category_name, 'user': user})
 
 
 
@@ -177,9 +213,8 @@ def add_a_product(request):
                     if Product.objects.filter(product_name = product.product_name):
                         return HttpResponse("There is a product with the exact same name, please name your product diffrently!")
                     product.product_desc = form.cleaned_data['Product_Desc']
-                    price_value = form.cleaned_data['Price']
-                    price_currency = form.cleaned_data['Currency']
-                    product.product_price = f"{price_value} {price_currency}"
+                    product.product_price_value = form.cleaned_data['Price']
+                    product.product_price_currency = form.cleaned_data['Currency']
 
                     product.image1 = form.cleaned_data['Image1']
 
@@ -213,3 +248,50 @@ def add_a_product(request):
 def about(request):
     user = request.user
     return render(request, 'about.html', {'user': user})
+
+def edit_a_product(request, product_name):
+    user = request.user
+    product = get_object_or_404(Product, product_name = product_name)
+    if product.user == user:
+        if request.method == 'POST':
+            form = ProductEditForm(request.POST, instance = product)
+            if form.is_valid():
+                product.sub = product.sub
+                product.user = user
+
+                if form.cleaned_data['Product_name'] != '':
+                    product.product_name = form.cleaned_data['Product_name']
+                else:
+                    product.product_name = product.product_name 
+
+                if form.cleaned_data['Product_Desc'] != '':
+                    product.product_desc = form.cleaned_data['Product_Desc']
+                else:
+                    product.product_desc = product.product_desc
+
+                if form.cleaned_data['Price'] != '':
+                    product.product_price_value = form.cleaned_data['Price']
+                else:
+                    product.product_price_value = product.product_price_value
+
+                product.product_price_currency = form.cleaned_data['Currency']
+
+                if form.cleaned_data['Image1'] is not None:
+                    product.image1 = form.cleaned_data['Image1']
+
+                if form.cleaned_data['Image2'] is not None:
+                    product.image2 = form.cleaned_data['Image2']
+                if form.cleaned_data['Image3'] is not None:
+                    product.image3 = form.cleaned_data['Image3']
+                if form.cleaned_data['Image4'] is not None:
+                    product.image4 = form.cleaned_data['Image4']
+                if form.cleaned_data['Image5'] is not None:
+                    product.image5 = form.cleaned_data['Image']
+
+                product.save()
+                return redirect('/items/')
+
+        else:
+            form = ProductEditForm()
+
+    return render(request, 'edit_a_product.html', {'form': form, 'product': product, 'user': user})

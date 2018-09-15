@@ -37,6 +37,31 @@ class ProductForm(forms.Form):
     Image4 = forms.FileField(required=False)
     Image5 = forms.FileField(required=False)
 
+
+class ProductEditForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['Product_name', 'Product_Desc', 'Price', 'Currency', 'Image1', 'Image2', 'Image3', 'Image4', 'Image5', ]
+
+    CURRENCIES = (
+    ("USD", ("USD")),
+    ("EUR", ("EUR")),
+    ("GBP", ("GBP")),
+    ("AUD", ("AUD")),
+    ("HRK", ("HRK"))
+)
+
+    Product_name = forms.CharField(required = False, label='Product Name', max_length = 100, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))
+    Product_Desc = forms.CharField(required = False, label='Description', max_length = 10000, widget = forms.Textarea(attrs = {'class': 'textareainputstyle'}))
+    Price = forms.CharField(required = False, label = 'Price', max_length = 10, widget = forms.TextInput(attrs = {'class': 'pricestyle'}))
+    Currency = forms.ChoiceField(required = False, label='Currency', choices = CURRENCIES, widget = forms.Select(attrs = {'class': 'choiceclass'}))
+    Image1 = forms.FileField(required = False)
+    Image2 = forms.FileField(required=False)
+    Image3 = forms.FileField(required=False)
+    Image4 = forms.FileField(required=False)
+    Image5 = forms.FileField(required=False)
+
+
 class LoginForm(forms.Form):
     username = forms.CharField(label = 'Username', max_length = 25, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))
     password = forms.CharField(label = 'Password', max_length = 100, widget = forms.PasswordInput(attrs = {'class': 'inputstyle'}))

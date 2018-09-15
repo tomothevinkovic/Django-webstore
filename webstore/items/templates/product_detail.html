@@ -12,6 +12,8 @@
 
     <style>
 
+    @import url('https://fonts.googleapis.com/css?family=Mukta');
+
     li a{font-weight: bold;}
 
     @media (min-width: 1000px) {
@@ -144,7 +146,36 @@ img{
     width: auto; 
     max-width: 300px; 
     max-height: 300px;
+    margin-left: 20px;
 }
+
+.trash{
+    background-color: #FF6666;
+    border: 1px solid #FF6666;
+    color: #fff;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    width: 100px;
+    text-align: left;
+    transition: background-color 0.5s linear;
+}
+
+.trash:hover{background-color: #FF3333}
+
+.pencil{
+    background-color: #00CCCC;
+    border: 1px solid #00CCCC;
+    color: #fff;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 18px;
+    width: 100px;
+    text-align: left;
+    transition: background-color 0.5s linear;
+}
+
+.pencil:hover{background-color: #3399FF}
+
+span{font-family: 'Mukta', sans-serif;}
 
     </style>
 
@@ -226,8 +257,9 @@ $("#menu-toggle").click( function (e){
 <h1 class="title">{{product.product_name}}</h1><br><br>
 <hr>
 
-<h1>Price: <strong>{{ product.product_price }}</strong></h1>
+<h1>Price: <strong>{{ product.product_price_value }} {{ product.product_price_currency }}</strong></h1>
 <hr>
+
 <p class="desc"><strong>Description:</strong><br><br>{{product.product_desc}}<br><br><br></p>
 
 
@@ -241,6 +273,13 @@ $("#menu-toggle").click( function (e){
 {% endif %}
 </p><br><br><br>
 
+{% if product.user == user %}
+<form method="post">
+{% csrf_token %}
+<button type="submit" name="delete" class="trash"><span class="glyphicon glyphicon-trash"></span><p style="display: inline;">Delete</p></button>
+<button type="submit" name="edit" class="pencil"><span class="glyphicon glyphicon-edit"></span> <p style="display: inline;">Edit</p></button>
+</form>
+{% endif %}
 <h1>Gallery:</h1><br>
 <hr>
 <img src="{{ product.image1.url }}" class="img-responsive">
