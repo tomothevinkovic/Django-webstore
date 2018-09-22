@@ -177,6 +177,19 @@ img{
 
 span{font-family: 'Mukta', sans-serif;}
 
+
+.inputstyle{
+
+
+    width: 400px;
+    font-size: 18px;
+    font-color: grey;
+    font-family: 'Ubuntu', sans-serif;
+
+
+
+}
+
     </style>
 
   </head>
@@ -273,6 +286,12 @@ $("#menu-toggle").click( function (e){
 {% endif %}
 </p><br><br><br>
 
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="submit" name="comment">
+</form>
+
 {% if product.user == user %}
 <form method="post">
 {% csrf_token %}
@@ -295,6 +314,14 @@ $("#menu-toggle").click( function (e){
 {% if product.image5 %}
 <img src="{{ product.image5.url }}" class="img-responsive">
 {% endif %}
+
+{% for comment in product.comment_set.all %}
+<div class="container-fluid" style="width:100%; float: left; margin-top: 20px;">
+<hr style="border-color: #000;">
+<h1>{{ comment.user }}</h1>
+<p> {{ comment.comment_text}} </p><br><br>
+</div>
+{% endfor %}
 
 </div>
 

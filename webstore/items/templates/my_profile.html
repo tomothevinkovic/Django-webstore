@@ -251,6 +251,12 @@ $("#menu-toggle").click( function (e){
       {% endfor %} 
     {% endif %}
     </p> <br> <br>
+
+      {% if user.profile.avg_rating != 0.00 %}
+      <p><strong>Rating:</strong> {{ user.profile.avg_rating }}</p>
+      {% else %}
+      <p><strong>Rating:</strong> <i>The user has not been rated yet!</i></p>
+      {% endif %}
   </div>
       <div class="container customc">
       <h2 style="font-family: 'Ubuntu', sans-serif;">Update your account information here:</h2>

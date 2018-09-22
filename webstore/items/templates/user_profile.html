@@ -213,6 +213,11 @@ $("#menu-toggle").click( function (e){
     <strong><p>E-mail:</strong> {{ requested_user.email }}</p><br>
     <strong><p>Zip Code and city:</strong> {{ requested_user.profile.postalcode }}, {{ requested_user.profile.city }}</p><br>
     <strong><p>Adress:</strong> {{ requested_user.profile.adress }}</p> <br>
+    {% if requested_user.profile.number_of_ratings != 0 %}
+      <p><strong>Rating:</strong> {{ requested_user.profile.avg_rating }}</p>
+      {% else %}
+      <p><strong>Rating:</strong> <i>The user has not been rated yet!</i></p>
+      {% endif %}<br>
     <strong><p>Products:</strong>{% if not products_list %}
        <i>The user has no products</i>
        {% else %} 
@@ -221,4 +226,15 @@ $("#menu-toggle").click( function (e){
       {% endfor %} 
     {% endif %}
     </p> <br> <br>
-    
+    </div>
+
+    <div class="container-fluid custom">
+
+    <form method="post">
+        {% csrf_token %}
+        {{ rating_form.as_p }}
+        <input type="submit" name="rate">
+
+    </form>
+
+    </div>
