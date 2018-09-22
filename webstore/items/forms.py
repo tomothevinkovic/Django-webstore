@@ -90,9 +90,9 @@ class PriceRangeForm(forms.Form):
     price_range1 = forms.DecimalField(label = 'pr1')
     price_range2 = forms.DecimalField(label = 'pr2')
 
-#STILL UNUSED, WILL BE USED FOR RATING THE USER
-class UserRatingForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['rating']
-    rating = forms.DecimalField()
+
+class UserRatingForm(forms.Form):
+    rating = forms.DecimalField(label = "Rate this user!")
+
+class CommentForm(forms.Form):
+    comment_text = forms.CharField(label = 'Comment', max_length = 200, widget = forms.TextInput(attrs = {'class': 'inputstyle'}))

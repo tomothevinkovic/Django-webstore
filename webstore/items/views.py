@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from.models import Category, Sub_Category, Product, Profile
-from.forms import ProductForm, LoginForm, RegistrationForm, PriceRangeForm, ProfileForm, ProductEditForm
+from.models import Category, Sub_Category, Product, Profile, Comment, Rating
+from.forms import ProductForm, LoginForm, RegistrationForm, PriceRangeForm, ProfileForm, ProductEditForm, UserRatingForm, CommentForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login as auth_login
@@ -14,7 +14,7 @@ import os
 def login(request):
     user = request.user
     if user.is_authenticated:
-        return HttpResponse("You cannot login or register since you already are registered")
+        return HttpResponse("You cannot login or register since you already are logged in")
     else:
         user = None
     all_categories = Category.objects.all()
@@ -126,16 +126,35 @@ def userprofile(request, username):
     except(KeyError, Product.DoesNotExist):
         products = None
 
-    # if user.is_authenticated:
-    #     if request.method == 'POST':
-    #         rating_form = UserRatingForm(request.POST)
-    #         if not products_list:
-    #             return HttpResponse('This user cannot be rated since he/she has not posted any products yet!')
-    #         else:
-    #             if rating_form.is_valid():
-    #                 given_rating = rating_form.cleaned_data['rating']
+    if user.is_authenticated:
+        if request.method == 'POST':
+            rating_form = UserRatingForm(request.POST)
+            if rating_form.is_valid():
+                if Rating.objects.filter(rated_user = requested_user, reviewer = user):
+                    return HttpResponse("You cannot rate the same user twice!")
+                else:
+                    if rating_form.cleaned_data['rating'] > 5:
+                        return HttpResponse("The rating you give to the user cannot be greater than five!")
+                    else:
+                        rating = Rating()
+                        rating.rated_user = requested_user
+                        rating.reviewer = user
+                        rating.rating = rating_form.cleaned_data['rating']
+                        requested_user.profile.total_rating += rating.rating
+                        requested_user.profile.number_of_ratings += 1
+                        requested_user.profile.avg_rating = requested_user.profile.total_rating/requested_user.profile.number_of_ratings
+                        requested_user.profile.save()
+                        user.profile.save()
+                        rating.save()
+                        return redirect(f"/items/users/{username}/")
+        else:
+            rating_form = UserRatingForm()
 
-    return render(request, 'user_profile.html', {'user': user, 'requested_user': requested_user, 'products_list': products_list})
+        if not products_list:
+            return HttpResponse('This user cannot be rated since he/she has not posted any products yet!')
+
+
+    return render(request, 'user_profile.html', {'user': user, 'requested_user': requested_user, 'products_list': products_list, 'rating_form': rating_form})
 
 def index(request):
     user = request.user
@@ -183,13 +202,36 @@ def product_detail(request, category_name, sub_name, product_name):
             return redirect('/items/my_profile/')
         else:
             return HttpResponse("You cannot delete a product because you are not the user who created the product!")
+
     elif request.method == 'POST' and 'edit' in request.POST:
         if user == product.user:
             return redirect(f'/items/edit_a_product/{product.product_name}')
         else:
             return HttpResponse("You cannot edit product information because you are not the user who created the product!")
 
-    return render(request, 'product_detail.html', {'product': product, 'category_name': category_name, 'user': user})
+    if request.method == 'POST' and 'comment' in request.POST:
+        comment_form = CommentForm(request.POST)
+        if user.is_authenticated:
+            if user != product.user:
+                if comment_form.is_valid():
+                    if not Comment.objects.filter(user = user, product = product):
+                        comment = Comment()
+                        comment.user = user
+                        comment.product = product
+                        comment.comment_text = comment_form.cleaned_data['comment_text']
+                        comment.save()
+                        return redirect(f"/items/{category_name}/{sub_name}/{product_name}/")
+                    else:
+                        return HttpResponse("You cannot comment on the same product twice. We are sorry, but this is to prevent spamming!")
+            else:
+                return HttpResponse('You cannot comment your own product!')
+        else:
+             return HttpResponse('You cannot comment because you are not logged in!')       
+
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'product_detail.html', {'product': product, 'category_name': category_name, 'user': user, 'comment_form': comment_form})
 
 
 
@@ -295,3 +337,5 @@ def edit_a_product(request, product_name):
             form = ProductEditForm()
 
     return render(request, 'edit_a_product.html', {'form': form, 'product': product, 'user': user})
+
+

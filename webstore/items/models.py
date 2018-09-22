@@ -26,9 +26,9 @@ class Profile(models.Model):
     city = models.CharField(max_length = 100, default = '')
     adress = models.CharField(max_length = 100, default = '')
     postalcode = models.CharField(max_length = 20, default = '')
-    # avg_rating = models.FloatField(default = 0)
-    # number_of_ratings = models.IntegerField(default = 0)
-    # total_rating = models.IntegerField(default = 0)
+    avg_rating = models.FloatField(default = 0)
+    number_of_ratings = models.IntegerField(default = 0)
+    total_rating = models.IntegerField(default = 0)
     
     def __str__(self):
         return f"{self.user.username}"
@@ -41,6 +41,13 @@ def create_user_profile(sender, instance, created, **kwargs):
 # @receiver(post_save, sender=User)
 # def save_user_profile(sender, instance, **kwargs):
 #     instance.profile.save()
+
+class Rating(models.Model):
+    rated_user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "rated_user", default = None)
+    reviewer = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "reviewer", default = None)
+    rating = models.FloatField(default = 0)
+    def __str__(self):
+        return f"{self.reviewer} -> {self.rated_user}"
 
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, default = '')
@@ -57,3 +64,12 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.product_name}"
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE, default = '')
+    product = models.ForeignKey(Product, on_delete = models.CASCADE, default = '')
+    comment_text = models.CharField(max_length = 200, default = '')
+
+    def __str__(self):
+        return f"{self.comment_text}, ({self.user.username})"
