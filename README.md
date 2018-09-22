@@ -51,3 +51,24 @@ Changes in Version 0.2.4.
 -KEY FEATURE: The ability to edit or delete the already posted product(The user can edit anything except the sub category)
 -BUGFIXES:
  -Images are now deleted when the product is deleted
+ 
+ 
+Version 0.3., release date: 22nd september 2018.
+
+Changes in Version 0.3.
+-New major release
+-You can now rate other users:
+-you cannot rate the user twice
+-the rating cannot be greater than 5 or lesser than 1
+-You cannot rate Yourself
+-You cannot rate the user if the user did not post any products
+-You can now comment on other users products:
+-No more than 1 comment per user
+-You cannot comment on your own product
+
+-NOTE: Instead of waiting for new changes on github, you can experience the latest changes by going to:
+http://redhat.pythonanywhere.com/items/
+On GitHub, the most stable code will be released, the website is used for testing purposes and coding on the go(aka. school when i have free time with the PC haha)
+Those changes can be quite buggy though, so be free to report any bugs to me!
+
+-MAJOR ANNOUNCMENT: Next major release, the version 0.4. will take at least a few weeks to make since I am working on other projects that have a deadline and I must finish them, and school is also keeping me away from coding(i hate it for it)
